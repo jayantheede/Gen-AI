@@ -7,7 +7,6 @@ topics:
 
 # What is Human Intelligence?
  Human intelligence is the complex mental capacity for learning, reasoning, problem-solving, abstract thinking, and adapting to new situations, involving cognitive functions like perception, memory, and language to understand and control one's environment 
- # core Concepts: 
 
 **what i was understood was from intelligence is it can learn the data and understand what was it**
 
