@@ -35,5 +35,6 @@ Awareness of oneself, one’s thoughts, intentions, and existence.
 # Example: in real world 
 
 if the student fails in the any exam then the student may aware of thems study plan and changes the preparation level 
+(here the students learns from his mistakes and corrects)
 
 
