@@ -11,7 +11,7 @@ topics:
 
 **what i was understood was from intelligence is it can learn the data and understand what was it**
 
-# Example: in real world 
+** Example: in real world **
 
 if the student fails in the any exam then the student may aware of thems study plan and changes the preparation level 
 (here the students learns from his mistakes and corrects)
