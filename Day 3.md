@@ -7,25 +7,25 @@
 
 - **Data Parallelism**  
     Same model processes different data chunks simultaneously  
-    👉 Used in training large models
+     Used in training large models
     
 - **Model Parallelism**  
     Model is split across multiple GPUs  
-    👉 Used when model is too large for one GPU
+     Used when model is too large for one GPU
     
 - **Pipeline Parallelism**  
     Different model layers run in stages  
-    👉 Used in large LLM deployments
+     Used in large LLM deployments
     
 - **Inference Parallelism**  
     Multiple user requests handled simultaneously  
-    👉 Used in chatbots and APIs
+    Used in chatbots and APIs
     
 
 **Why it matters:**  
-✔ Faster response  
-✔ Better scalability  
-✔ Lower latency in real-time systems
+   Faster response  
+   Better scalability  
+   Lower latency in real-time systems
 
 ---
 
@@ -151,11 +151,6 @@ If you want, I can also give:
 - Interview-ready answers
     
 - System design explanation
-    
-
-Just tell me 👍
-
-  
 
 10000 chars
 
@@ -224,7 +219,7 @@ This applies to **AI assistants**, **hospital bots**, **education bots**, **surv
 - Chunk long videos into segments
     
 
-🛠 Tools:
+ **Tools:**
 
 - OpenCV
     
@@ -366,12 +361,12 @@ Example:
 
 ## **F. Example Use Cases**
 
-- 🏥 **Hospital:** Live patient monitoring
+-  **Hospital:** Live patient monitoring
     
-- 🎓 **Education:** Video-based Q&A
+-  **Education:** Video-based Q&A
     
-- 🛍️ **Retail:** Camera-based assistance
+-  **Retail:** Camera-based assistance
     
-- 🚨 **Security:** Activity detection
+-  **Security:** Activity detection
     
-- 📺 **Media:** Video summarization
+-  **Media:** Video summarization
