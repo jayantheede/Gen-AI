@@ -128,15 +128,15 @@ All words at once
 
 ## How Parallelism Works in Transformers
 
-### 1️⃣ Tokenization
+###  Tokenization
 
 Sentence is split into tokens.
 
-### 2️⃣ Embeddings
+###  Embeddings
 
 All tokens are converted into vectors **simultaneously**.
 
-### 3️⃣ Self-Attention (Parallel)
+###  Self-Attention (Parallel)
 
 Each token:
 
