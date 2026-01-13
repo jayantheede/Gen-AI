@@ -112,9 +112,9 @@
     
 
 **Why it matters:**  
-✔ Reduces token usage  
-✔ Enables fast retrieval  
-✔ Scales to millions of records
+ Reduces token usage  
+ Enables fast retrieval  
+ Scales to millions of records
 
 ---
 
