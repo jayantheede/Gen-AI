@@ -1,0 +1,17 @@
+fastapi
+uvicorn
+python-multipart
+pymupdf
+pytesseract
+pillow
+pymongo
+langchain
+langchain-huggingface
+sentence-transformers
+python-dotenv
+langchain-groq
+numpy
+pandas
+streamlit
+torch
+transformers
