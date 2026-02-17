@@ -43,16 +43,16 @@ async def ask_question(request: QuestionRequest):
 # Static Files Mounts
 if os.path.exists("Data"):
     app.mount("/data", StaticFiles(directory="Data"), name="data")
-    print("✓ Mounted /data directory")
+    print("[OK] Mounted /data directory")
     
     if os.path.exists("Data/processed/images"):
         app.mount("/images", StaticFiles(directory="Data/processed/images"), name="images")
-        print("✓ Mounted /images directory")
+        print("[OK] Mounted /images directory")
 
 # Mount Frontend - MUST BE LAST
 if os.path.exists("frontend"):
     app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
-    print("✓ Mounted PREMIUM FRONTEND at /")
+    print("[OK] Mounted PREMIUM FRONTEND at /")
 else:
     @app.get("/")
     async def root():

@@ -319,11 +319,14 @@ def ingest_all():
                     if img.get("ocr_text"):
                         combined_text += f" | Image Content: {img['ocr_text']}"
                 
-                # Extract potential Art. No. from page text
-                art_no_match = re.search(r"Art\. No\. (\d{4}\s?\d{3}\s?\d{3,4}|\d{9,10})", page_text)
+                # Broadened Art. No. Search (e.g., 083014 750 or 0714 661 113)
+                art_no_match = re.search(r"Art\. No\. (\d{3,6}[\s\-]?\d{3}[\s\-]?\d{2,4})", page_text)
                 product_label = f"Automotive Product - Page {page_no}"
                 if art_no_match:
-                    product_label = f"WURTH Product - Art. No. {art_no_match.group(1)}"
+                    art_id = art_no_match.group(1).strip()
+                    product_label = f"WURTH Product - Art. No. {art_id}"
+                    # Explicitly inject into combined text for high-weight indexing
+                    combined_text = f"ArtNo: {art_id} | {combined_text}"
 
                 doc = {
                     "id": node_id,

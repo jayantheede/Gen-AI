@@ -2,6 +2,7 @@ from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
 import pymongo
+import re
 
 load_dotenv()
 
@@ -99,6 +100,16 @@ class DatabaseHandler:
             "limit": limit
         }
         return self._execute_resilient_search(self.unified_collection, search_params, filter_dict)
+
+    def keyword_search(self, term, limit=5, category=None):
+        """
+        Direct text search for Article Numbers or specific keywords.
+        """
+        query = {"combined_text": {"$regex": re.escape(term), "$options": "i"}}
+        if category:
+            query["category"] = category
+            
+        return list(self.unified_collection.find(query).limit(limit))
 
     def strict_visual_search(self, clip_text_embedding, category, limit=5):
         """

@@ -60,13 +60,13 @@ class ChatEngine:
 
             if wc <= 3:
                 rag_mode = "speculative"
-                print("[AUTO ROUTER] Short query → Speculative Mode")
+                print("[AUTO ROUTER] Short query -> Speculative Mode")
             elif len(initial_docs) < 3:
                 rag_mode = "fusion"
-                print("[AUTO ROUTER] Low recall → Fusion Mode")
+                print("[AUTO ROUTER] Low recall -> Fusion Mode")
             else:
                 rag_mode = "standard"
-                print("[AUTO ROUTER] High confidence → Standard Mode")
+                print("[AUTO ROUTER] High confidence -> Standard Mode")
 
         # Route to appropriate pipeline
         if rag_mode == "standard":
@@ -272,6 +272,23 @@ Provide exactly 3 variations, one per line, no numbering:"""
         all_candidate_images = [] # List of formatted image objects with scores
         seen_paths = set()
 
+        # Step 0: Keyword Boosting (Detection of Art. No.)
+        # e.g., "083014 750" or "83014750"
+        art_ids = re.findall(r"(\d{3,6}[\s\-]?\d{3}[\s\-]?\d{2,4})", search_query)
+        if art_ids:
+            print(f"   |_ [KEYWORD] Detected potential identifiers: {art_ids}")
+            for aid in art_ids[:2]: # Limit to top 2 for speed
+                keyword_nodes = self.db.keyword_search(aid, category=category)
+                for node in keyword_nodes:
+                    if "related_images" in node:
+                        for img in node["related_images"]:
+                            img_path = img.get("image_path") or img.get("path")
+                            if img_path and img_path not in seen_paths:
+                                # High Boost for direct keyword match
+                                img["score"] = 0.95
+                                all_candidate_images.append(self._format_image_path(img, parent_node=node))
+                                seen_paths.add(img_path)
+
         # Step 1: Collect candidates from Visual-Direct Search
         # Increase search breadth
         visual_nodes = self.db.strict_visual_search(query_clip_emb, category, limit=20)
@@ -285,8 +302,8 @@ Provide exactly 3 variations, one per line, no numbering:"""
                         if img_emb:
                             sim = np.dot(query_clip_emb, img_emb) / (np.linalg.norm(query_clip_emb) * np.linalg.norm(img_emb) + 1e-8)
                             
-                            # Strict threshold for visual accuracy
-                            if sim > 0.22:
+                            # Lowered threshold for better recall in technical catalogs
+                            if sim > 0.15:
                                 img["score"] = float(sim)
                                 all_candidate_images.append(self._format_image_path(img, parent_node=node))
                                 seen_paths.add(img_path)
@@ -306,8 +323,14 @@ Provide exactly 3 variations, one per line, no numbering:"""
                                 # This ensures the gallery matches the text answer
                                 final_score = float(sim) * 1.15
                                 
-                                if final_score > 0.22:
+                                if final_score > 0.15:
                                     img["score"] = final_score
+                                    all_candidate_images.append(self._format_image_path(img, parent_node=doc))
+                                    seen_paths.add(img_path)
+                                elif len(all_candidate_images) < 2:
+                                    # RELIABILITY FALLBACK: If we have very few images but a strong text match, 
+                                    # include at least 1-2 images from the matching text doc even if CLIP sim is low.
+                                    img["score"] = 0.16 # Force inclusion
                                     all_candidate_images.append(self._format_image_path(img, parent_node=doc))
                                     seen_paths.add(img_path)
 
@@ -355,7 +378,14 @@ Technical Search Term:"""
 
     def _detect_category(self, question):
         q = question.lower()
-        if any(w in q for w in ["car", "vehicle", "engine", "speed", "safety", "luxury", "suv", "sedan", "wrench", "soldering", "pneumatic", "wiring", "electrical"]): return "automotive"
+        if any(w in q for w in ["wrench", "pneumatic", "impact"]): return "Pneumatic Tools"
+        if any(w in q for w in ["soldering", "welding", "solder"]): return "Soldering & Welding"
+        if any(w in q for w in ["wiring", "electrical", "shrink", "cable"]): return "Wiring & Electrical"
+        if any(w in q for w in ["heavy duty", "truck", "bus"]): return "Heavy Duty Service"
+        if any(w in q for w in ["grease", "lubricant", "oil", "maintenance", "chemical"]): return "automotive"
+        
+        # Generic fallback
+        if any(w in q for w in ["car", "vehicle", "engine", "safety", "automotive"]): return "automotive"
         return None
 
     def _deduplicate_docs(self, docs):

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinia Interior | Elite Design Concierge</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+
+    <header>
+        <div class="logo">INFINIA <span>INTERIOR</span></div>
+        <div class="tagline">Visual Intelligence & Architectural Discovery</div>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <div class="glass-card main-search">
+                <div class="mode-selector">
+                    <label>Intelligence Mode</label>
+                    <select id="ragMode">
+                        <option value="standard">Standard</option>
+                        <option value="corrective">Corrective</option>
+                        <option value="speculative">Speculative</option>
+                        <option value="fusion">Fusion</option>
+                    </select>
+                </div>
+
+                <div class="search-input-group">
+                    <input type="text" id="queryInput"
+                        placeholder="Explain your design vision... (e.g., 'Modern kitchen with grey cabinets')">
+                    <button id="discoverBtn">DISCOVER</button>
+                </div>
+                <div class="hint">Powered by CLIP Model & Vector Intelligence</div>
+            </div>
+        </section>
+
+        <section id="resultsArea" class="results-area hidden">
+            <div class="results-grid">
+                <div class="analysis-column">
+                    <div class="glass-card analysis-card">
+                        <h2>AI Analysis</h2>
+                        <div id="aiResponse" class="ai-text">
+                            <!-- AI content goes here -->
+                        </div>
+                        <div id="badgesContainer" class="badges">
+                            <span class="badge">CLIP-MATCHED</span>
+                            <span class="badge">VECTOR-VERIFIED</span>
+                        </div>
+                        <div id="timingInfo" class="timing-info"></div>
+                    </div>
+                </div>
+
+                <div class="gallery-column">
+                    <h2>Catalog Discoveries</h2>
+                    <div id="imageGallery" class="image-grid">
+                        <!-- Images go here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div id="loader" class="loader-overlay hidden">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <p>Analyzing architectural geometry...</p>
+                <div class="progress-steps">
+                    <div class="step" data-step="text">Encoding Query</div>
+                    <div class="step" data-step="search">Searching Catalog</div>
+                    <div class="step" data-step="vision">Visual Verification</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>INFINIA AI // POWERED BY CLIP MODEL // 2026 CATALOG V1</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
